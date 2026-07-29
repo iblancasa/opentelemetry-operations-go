@@ -106,7 +106,7 @@ func (d *Detector) computeInstanceMachineType(ctx context.Context, projectID, zo
 	if err != nil {
 		return "", err
 	}
-	defer res.Body.Close()
+	defer func() { _ = res.Body.Close() }()
 	if res.StatusCode < 200 || res.StatusCode >= 300 {
 		return "", fmt.Errorf("compute instances.get returned %s", res.Status)
 	}
